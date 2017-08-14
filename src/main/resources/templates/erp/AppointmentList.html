@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Appointment List</title>
+</head>
+<body>
+<label>Appointment List</label>
+<div>
+    <div th:if="${appointments != null and not #lists.isEmpty(appointments)}">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>customer name</th>
+                <th>mobile</th>
+                <th>address</th>
+                <th>appointment time</th>
+                <th>status</th>
+            </tr>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.id}"></td>
+                <td th:text="${appointment.customerName}"></td>
+                <td th:text="${appointment.contactMobile}"></td>
+                <td th:text="${appointment.address}"></td>
+                <td th:text="${appointment.appointmentTime}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

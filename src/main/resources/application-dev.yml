@@ -1,0 +1,51 @@
+#环境配置
+my:
+  env: Dev
+  app-name: Dayang Home ERP System
+
+#数据库连接配置
+spring:
+  datasource:
+    hikari:
+      username: root
+      password: hakunami
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/dayanghome?useUnicode=yes&characterEncoding=UTF-8
+  thymeleaf:
+    mode: HTML5
+  #字符集和json格式工具
+  http:
+    encoding:
+      charset: utf-8
+    converters:
+      preferred-json-mapper: jackson
+    multipart:
+      max-file-size: 10MB
+  application:
+    name: Dayang Home ERP
+
+#mynatis配置
+mybatis:
+  type-aliases-package: com.dayanghome.dayangerp.vo
+  #mapper加载路径
+  mapper-locations: classpath:mapper/*Mapper.xml
+  #myatbis配置文件
+  config-location: classpath:mybatis-conf.xml
+
+#加载log4j2
+logging:
+  config: classpath:log4j2.xml
+  level:
+    ROOT: info
+    log4j.logger.org.mybatis: debug
+    log4j.logger.java.sql: debug
+    com.dayanghome.dayangerp.mapper: debug
+  file:
+server:
+  session-timeout : 3600
+  port: 9411
+
+
+
+
+
