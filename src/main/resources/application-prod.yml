@@ -7,10 +7,10 @@ my:
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/dayanghome?useUnicode=yes&characterEncoding=UTF-8
       username: root
       password: hakunami
       driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/dayanghome?useUnicode=yes&characterEncoding=UTF-8
   thymeleaf:
     mode: HTML5
   #字符集和json格式工具
@@ -36,11 +36,10 @@ mybatis:
 logging:
   config: classpath:log4j2.xml
   level:
-  level:
     ROOT: info
     log4j.logger.org.mybatis: error
     log4j.logger.java.sql: error
-    com.dayanghome.dayangerp.mapper: info
+    com.dayanghome.dayangerp.mapper: error
   file:
 server:
   session-timeout : 3600
