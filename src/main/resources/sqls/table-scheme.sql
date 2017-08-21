@@ -5,6 +5,7 @@ CREATE TABLE `customer` (
   `wxName` VARCHAR(60) DEFAULT '' COMMENT '微信名',
   `chineseName` VARCHAR(20) DEFAULT '' COMMENT '中文名',
   `mobile` VARCHAR(11) DEFAULT '' COMMENT '用户手机',
+  `gender` INT(1) DEFAULT 0 COMMENT '用户性别 0=女 1=男',
   `cityId` INT(11) DEFAULT 0 COMMENT '城市ID',
   `address` VARCHAR(120) DEFAULT '' COMMENT '常住住址',
   `createTime` datetime NOT NULL COMMENT '创建时间',
@@ -16,6 +17,7 @@ DROP TABLE `appointment`;
 CREATE TABLE `appointment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customerId` int(11) NOT NULL COMMENT '用户ID',
+  `customerName` VARCHAR(20) DEFAULT '' COMMENT '用户中文名',
   `contactMobile` varchar(11) NOT NULL COMMENT '联系手机',
   `cityId` INT(11) DEFAULT 0 COMMENT '城市ID',
   `address` VARCHAR(250) NOT NULL COMMENT '上门地址',

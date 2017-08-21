@@ -10,6 +10,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Appointment implements Serializable{
     private Integer id;
     private Integer customerId;
+    private String customerName;
     private String contactMobile;
     private Integer cityId;
     private Integer districtId;
@@ -19,8 +20,8 @@ public class Appointment implements Serializable{
     private Date createTime;
     private Date updateTime;
 
-    //non-db fields
-    private String customerName;
+    //non-db field
+    private Integer gender;
 
     public Integer getId() {
         return id;
@@ -108,6 +109,14 @@ public class Appointment implements Serializable{
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     @Override

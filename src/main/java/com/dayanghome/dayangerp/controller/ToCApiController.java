@@ -6,12 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/toc/v1")
 public class ToCApiController {
     private static final Logger Log = LoggerFactory.getLogger(ToCApiController.class);
@@ -22,6 +20,7 @@ public class ToCApiController {
     @RequestMapping(value = "/appointment/add", method = RequestMethod.POST) @ResponseBody
     public Integer addAppointment(@RequestBody AppointmentForm appointmentForm) {
         try{
+            appointmentForm.validate();
             return appointmentService.addAppointment(appointmentForm);
         }catch (Exception e){
             Log.error("failed to add appointment", e);

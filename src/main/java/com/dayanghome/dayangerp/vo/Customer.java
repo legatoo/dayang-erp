@@ -9,6 +9,7 @@ public class Customer implements Serializable{
     private String wxName;
     private String chineseName;
     private String mobile;
+    private Integer gender;
     private Integer cityId;
     private String address;
     private Date createTime;
@@ -54,6 +55,14 @@ public class Customer implements Serializable{
         this.mobile = mobile;
     }
 
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
     public Integer getCityId() {
         return cityId;
     }
@@ -94,6 +103,7 @@ public class Customer implements Serializable{
                 ", wxName='" + wxName + '\'' +
                 ", chineseName='" + chineseName + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", gender='" + gender + '\'' +
                 ", cityId=" + cityId +
                 ", address='" + address + '\'' +
                 ", createTime=" + createTime +

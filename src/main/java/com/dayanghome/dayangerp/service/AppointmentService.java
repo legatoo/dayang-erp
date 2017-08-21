@@ -2,10 +2,12 @@ package com.dayanghome.dayangerp.service;
 
 import com.dayanghome.dayangerp.form.AppointmentForm;
 import com.dayanghome.dayangerp.form.AppointmentQuery;
+import com.dayanghome.dayangerp.form.CustomerQuery;
 import com.dayanghome.dayangerp.mapper.AppointmentMapper;
 import com.dayanghome.dayangerp.mapper.CustomerMapper;
 import com.dayanghome.dayangerp.vo.Appointment;
 import com.dayanghome.dayangerp.vo.Customer;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +26,25 @@ public class AppointmentService {
 
     @Transactional
     public int addAppointment(AppointmentForm form){
-        List<Customer> existed = customerMapper.findByMobile(form.getMobile());
-        Integer customId;
-        if(existed != null && existed.size() > 0){
-            customId = existed.get(0).getId();
-        }else{
-            Customer customer = form.extractCustomer();
+        Customer customer = form.extractCustomer();
+
+        boolean exist = false;
+        if(!Strings.isNullOrEmpty(form.getMobile())){
+            List<Customer> existed = customerMapper.findByMobile(form.getMobile());
+            if(existed != null && existed.size() > 0) {
+                customer = existed.get(0);
+                exist = true;
+            }
+        }
+
+        if(!exist){
             customerMapper.insertCustomer(customer);
-            customId = customer.getId();
-            Log.info("insert new custom id {}, detail {}", customId, customer);
+            Log.info("insert new custom id {}, detail {}", customer.getId(), customer);
         }
 
         Appointment appointment = form.extractAppointment();
-        appointment.setCustomerId(customId);
+        appointment.setCustomerId(customer.getId());
+        appointment.setCustomerName(customer.getChineseName());
         appointmentMapper.insertAppointment(appointment);
         return appointment.getId();
     }
@@ -45,6 +53,13 @@ public class AppointmentService {
         return appointmentMapper.searchAppointment(query);
     }
 
+    public int countAppointments(AppointmentQuery query){
+        return appointmentMapper.countByQuery(query);
+    }
+
+    public List<Customer> searchCustomer(CustomerQuery query){
+        return customerMapper.searchCustomers(query);
+    }
     public List<Customer> getCustomerInfo(Set<Integer> customerIds){
         return customerMapper.getCustomerInfoByIds(customerIds);
     }

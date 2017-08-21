@@ -11,6 +11,7 @@ public class AppointmentForm implements Serializable {
     private String wxName;
     private String chineseName;
     private String mobile;
+    private Integer gender;
     private Integer cityId;
     private Integer districtId;
     private String address;
@@ -84,12 +85,21 @@ public class AppointmentForm implements Serializable {
         this.appointmentTime = appointmentTime;
     }
 
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
     public Customer extractCustomer(){
         Customer customer = new Customer();
         customer.setWxId(wxId);
         customer.setWxName(wxName);
         customer.setChineseName(chineseName);
         customer.setMobile(mobile);
+        customer.setGender(gender);
         customer.setCityId(cityId);
         customer.setCityId(districtId);
         customer.setAddress(address);
