@@ -1,5 +1,8 @@
 package com.dayanghome.dayangerp.form;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class AppointmentQuery {
     private String name;
     private String mobile;
@@ -7,10 +10,17 @@ public class AppointmentQuery {
     private Integer status;
     private Integer cityId;
     private Integer districtId;
-    private Integer pageNum;
+    private Long fromDay;
+    private Long toDay;
+    private Integer pageNum = 0;
     private Integer pageSize = 30;
 
     private Integer offset;
+    private String fromDayStr;
+    private String toDayStr;
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+
 
     public String getName() {
         return name;
@@ -76,6 +86,22 @@ public class AppointmentQuery {
         this.pageSize = pageSize;
     }
 
+    public Long getFromDay() {
+        return fromDay;
+    }
+
+    public void setFromDay(Long fromDay) {
+        this.fromDay = fromDay;
+    }
+
+    public Long getToDay() {
+        return toDay;
+    }
+
+    public void setToDay(Long toDay) {
+        this.toDay = toDay;
+    }
+
     public Integer getOffset() {
         if (pageNum == 0) {
             return 0;
@@ -88,6 +114,22 @@ public class AppointmentQuery {
         this.offset = offset;
     }
 
+    public String getFromDayStr() {
+        return FORMATTER.print(fromDay);
+    }
+
+    public void setFromDayStr(String fromDayStr) {
+        this.fromDayStr = fromDayStr;
+    }
+
+    public String getToDayStr() {
+        return FORMATTER.print(toDay);
+    }
+
+    public void setToDayStr(String toDayStr) {
+        this.toDayStr = toDayStr;
+    }
+
     @Override
     public String toString() {
         return "AppointmentQuery{" +
@@ -97,8 +139,11 @@ public class AppointmentQuery {
                 ", status=" + status +
                 ", cityId=" + cityId +
                 ", districtId=" + districtId +
+                ", fromDay=" + fromDay +
+                ", toDay=" + toDay +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
+                ", offset=" + offset +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.dayanghome.dayangerp.form;
 
 import com.dayanghome.dayangerp.vo.Appointment;
 import com.dayanghome.dayangerp.vo.Customer;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +16,9 @@ public class AppointmentForm implements Serializable {
     private Integer cityId;
     private Integer districtId;
     private String address;
-    private Long appointmentTime;
+    private Long appointmentDay;
+    private Integer hourBegin;
+    private Integer hourEnd;
 
     public void validate(){
 
@@ -77,12 +80,12 @@ public class AppointmentForm implements Serializable {
         this.address = address;
     }
 
-    public Long getAppointmentTime() {
-        return appointmentTime;
+    public Long getAppointmentDay() {
+        return appointmentDay;
     }
 
-    public void setAppointmentTime(Long appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setAppointmentDay(Long appointmentDay) {
+        this.appointmentDay = appointmentDay;
     }
 
     public Integer getGender() {
@@ -91,6 +94,22 @@ public class AppointmentForm implements Serializable {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public Integer getHourBegin() {
+        return hourBegin;
+    }
+
+    public void setHourBegin(Integer hourBegin) {
+        this.hourBegin = hourBegin;
+    }
+
+    public Integer getHourEnd() {
+        return hourEnd;
+    }
+
+    public void setHourEnd(Integer hourEnd) {
+        this.hourEnd = hourEnd;
     }
 
     public Customer extractCustomer(){
@@ -115,9 +134,12 @@ public class AppointmentForm implements Serializable {
         appointment.setAddress(address);
         appointment.setCityId(cityId);
         appointment.setDistrictId(districtId);
-        appointment.setAppointmentTime(new Date(appointmentTime));
+        DateTime appointmentDate = new DateTime(appointmentDay).withTimeAtStartOfDay();
+        appointment.setAppointmentDay(new Date(appointmentDate.getMillis()));
         appointment.setStatus(0);//0=为处理 1=已处理
         appointment.setCreateTime(new Date());
+        appointment.setHourBegin(hourBegin);
+        appointment.setHourEnd(hourEnd);
 
         return appointment;
     }

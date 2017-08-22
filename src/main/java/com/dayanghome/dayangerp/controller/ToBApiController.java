@@ -43,6 +43,7 @@ public class ToBApiController {
                 appointments.forEach(e -> {
                     e.setCustomerName(customerMap.get(e.getCustomerId()).getChineseName());
                     e.setGender(customerMap.get(e.getCustomerId()).getGender());
+                    e.mergeHourBeginAndEnd();
                 });
 
                 total = appointmentService.countAppointments(query);
@@ -76,7 +77,7 @@ public class ToBApiController {
     }
 
     @RequestMapping(value = "/appointment/markdone", method = RequestMethod.POST) @ResponseBody
-    public Result selectAppointmentByMobile(@RequestParam("appointmentId") Integer appointmentId,
+    public Result markAppointmentDone(@RequestParam("appointmentId") Integer appointmentId,
                                              @RequestParam("toStatus") Integer toStatus) {
         Result result = new Result();
         try{
@@ -84,7 +85,22 @@ public class ToBApiController {
             result.setCode(ResultCode.SUCCESS);
             result.setData(code);
         }catch (Exception e){
-            Log.error("failed to add appointment", e);
+            Log.error("failed to update appointment", e);
+            result.setCode(ResultCode.INTERNAL_ERROR);
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/appointment/delete", method = RequestMethod.POST) @ResponseBody
+    public Result deleteAppointment(@RequestParam("appointmentId") Integer appointmentId) {
+        Result result = new Result();
+        try{
+            Integer code = appointmentService.deleteAppointment(appointmentId);
+            result.setCode(ResultCode.SUCCESS);
+            result.setData(code);
+        }catch (Exception e){
+            Log.error("failed to delete appointment", e);
             result.setCode(ResultCode.INTERNAL_ERROR);
         }
 

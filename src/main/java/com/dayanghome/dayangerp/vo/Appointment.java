@@ -15,13 +15,16 @@ public class Appointment implements Serializable{
     private Integer cityId;
     private Integer districtId;
     private String address;
-    private Date appointmentTime;
+    private Date appointmentDay;
+    private Integer hourBegin;
+    private Integer hourEnd;
     private Integer status;
     private Date createTime;
     private Date updateTime;
 
     //non-db field
     private Integer gender;
+    private String hourRange;
 
     public Integer getId() {
         return id;
@@ -71,12 +74,28 @@ public class Appointment implements Serializable{
         this.address = address;
     }
 
-    public Date getAppointmentTime() {
-        return appointmentTime;
+    public Date getAppointmentDay() {
+        return appointmentDay;
     }
 
-    public void setAppointmentTime(Date appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setAppointmentDay(Date appointmentDay) {
+        this.appointmentDay = appointmentDay;
+    }
+
+    public Integer getHourBegin() {
+        return hourBegin;
+    }
+
+    public void setHourBegin(Integer hourBegin) {
+        this.hourBegin = hourBegin;
+    }
+
+    public Integer getHourEnd() {
+        return hourEnd;
+    }
+
+    public void setHourEnd(Integer hourEnd) {
+        this.hourEnd = hourEnd;
     }
 
     public Integer getStatus() {
@@ -119,18 +138,35 @@ public class Appointment implements Serializable{
         this.gender = gender;
     }
 
+    public String getHourRange() {
+        return hourRange;
+    }
+
+    public void setHourRange(String hourRange) {
+        this.hourRange = hourRange;
+    }
+
+    public void mergeHourBeginAndEnd(){
+        this.hourRange = this.hourBegin + "时 - " + this.hourEnd + "时";
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
                 "id=" + id +
                 ", customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
                 ", contactMobile='" + contactMobile + '\'' +
                 ", cityId=" + cityId +
+                ", districtId=" + districtId +
                 ", address='" + address + '\'' +
-                ", appointmentTime=" + appointmentTime +
+                ", appointmentDay=" + appointmentDay +
+                ", hourBegin='" + hourBegin + '\'' +
+                ", hourEnd='" + hourEnd + '\'' +
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", gender=" + gender +
                 '}';
     }
 }

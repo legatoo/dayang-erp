@@ -68,4 +68,9 @@ public class AppointmentService {
     public int updateAppointmentStatus(Integer appointmentId, Integer toStatus){
         return appointmentMapper.updateAppointmentStatus(appointmentId, toStatus);
     }
+
+    @Transactional
+    public int deleteAppointment(Integer appointmentId){
+        return appointmentMapper.deleteAppointment(appointmentId);
+    }
 }
