@@ -8,8 +8,8 @@ public class AppointmentQuery {
     private String mobile;
     private String address;
     private Integer status;
+    private Integer provinceId;
     private Integer cityId;
-    private Integer districtId;
     private Long fromDay;
     private Long toDay;
     private Integer pageNum = 0;
@@ -60,14 +60,6 @@ public class AppointmentQuery {
 
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
-    }
-
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
     }
 
     public Integer getPageNum() {
@@ -130,6 +122,14 @@ public class AppointmentQuery {
         this.toDayStr = toDayStr;
     }
 
+    public Integer getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
     @Override
     public String toString() {
         return "AppointmentQuery{" +
@@ -137,13 +137,15 @@ public class AppointmentQuery {
                 ", mobile='" + mobile + '\'' +
                 ", address='" + address + '\'' +
                 ", status=" + status +
+                ", provinceId=" + provinceId +
                 ", cityId=" + cityId +
-                ", districtId=" + districtId +
                 ", fromDay=" + fromDay +
                 ", toDay=" + toDay +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 ", offset=" + offset +
+                ", fromDayStr='" + fromDayStr + '\'' +
+                ", toDayStr='" + toDayStr + '\'' +
                 '}';
     }
 }

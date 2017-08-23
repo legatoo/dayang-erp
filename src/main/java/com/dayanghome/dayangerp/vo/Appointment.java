@@ -12,15 +12,18 @@ public class Appointment implements Serializable{
     private Integer customerId;
     private String customerName;
     private String contactMobile;
+    private Integer provinceId;
+    private String provinceName;
     private Integer cityId;
-    private Integer districtId;
+    private String cityName;
     private String address;
     private Date appointmentDay;
-    private Integer hourBegin;
-    private Integer hourEnd;
+    private String hourBegin;
+    private String hourEnd;
     private Integer status;
     private Date createTime;
     private Date updateTime;
+    private String comment;
 
     //non-db field
     private Integer gender;
@@ -58,13 +61,6 @@ public class Appointment implements Serializable{
         this.cityId = cityId;
     }
 
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
 
     public String getAddress() {
         return address;
@@ -82,19 +78,19 @@ public class Appointment implements Serializable{
         this.appointmentDay = appointmentDay;
     }
 
-    public Integer getHourBegin() {
+    public String getHourBegin() {
         return hourBegin;
     }
 
-    public void setHourBegin(Integer hourBegin) {
+    public void setHourBegin(String hourBegin) {
         this.hourBegin = hourBegin;
     }
 
-    public Integer getHourEnd() {
+    public String getHourEnd() {
         return hourEnd;
     }
 
-    public void setHourEnd(Integer hourEnd) {
+    public void setHourEnd(String hourEnd) {
         this.hourEnd = hourEnd;
     }
 
@@ -146,9 +142,42 @@ public class Appointment implements Serializable{
         this.hourRange = hourRange;
     }
 
-    public void mergeHourBeginAndEnd(){
-        this.hourRange = this.hourBegin + "时 - " + this.hourEnd + "时";
+    public Integer getProvinceId() {
+        return provinceId;
     }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void mergeHourBeginAndEnd(){
+        this.hourRange = this.hourBegin + " - " + this.hourEnd + "";
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
 
     @Override
     public String toString() {
@@ -157,16 +186,20 @@ public class Appointment implements Serializable{
                 ", customerId=" + customerId +
                 ", customerName='" + customerName + '\'' +
                 ", contactMobile='" + contactMobile + '\'' +
+                ", provinceId=" + provinceId +
+                ", provinceName='" + provinceName + '\'' +
                 ", cityId=" + cityId +
-                ", districtId=" + districtId +
+                ", cityName='" + cityName + '\'' +
                 ", address='" + address + '\'' +
                 ", appointmentDay=" + appointmentDay +
-                ", hourBegin='" + hourBegin + '\'' +
-                ", hourEnd='" + hourEnd + '\'' +
+                ", hourBegin=" + hourBegin +
+                ", hourEnd=" + hourEnd +
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", comment='" + comment + '\'' +
                 ", gender=" + gender +
+                ", hourRange='" + hourRange + '\'' +
                 '}';
     }
 }

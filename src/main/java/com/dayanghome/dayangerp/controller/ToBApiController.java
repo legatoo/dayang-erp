@@ -1,10 +1,12 @@
 package com.dayanghome.dayangerp.controller;
 
 import com.dayanghome.dayangerp.enums.ResultCode;
+import com.dayanghome.dayangerp.form.AppointmentForm;
 import com.dayanghome.dayangerp.form.AppointmentQuery;
 import com.dayanghome.dayangerp.form.CustomerQuery;
 import com.dayanghome.dayangerp.result.Result;
 import com.dayanghome.dayangerp.service.AppointmentService;
+import com.dayanghome.dayangerp.utils.DistrictIdMap;
 import com.dayanghome.dayangerp.vo.Appointment;
 import com.dayanghome.dayangerp.vo.Customer;
 import org.slf4j.Logger;
@@ -26,6 +28,23 @@ public class ToBApiController {
     private static final Logger Log = LoggerFactory.getLogger(ToCApiController.class);
 
     @Autowired AppointmentService appointmentService;
+
+    @RequestMapping(value = "/appointment/add", method = RequestMethod.POST) @ResponseBody
+    public Result addAppointment(@RequestBody AppointmentForm appointmentForm) {
+        Result result = new Result();
+
+        try{
+            appointmentForm.validate();
+            int appointmentId =  appointmentService.addAppointment(appointmentForm);
+            result.setCode(ResultCode.SUCCESS);
+            result.setData(appointmentId);
+        }catch (Exception e){
+            Log.error("failed to add appointment", e);
+            result.setCode(ResultCode.INTERNAL_ERROR);
+        }
+
+        return result;
+    }
 
     @RequestMapping(value = "/appointment/search", method = RequestMethod.POST) @ResponseBody
     public Result queryAppointments(@RequestBody AppointmentQuery query) {
@@ -82,6 +101,22 @@ public class ToBApiController {
         Result result = new Result();
         try{
             Integer code = appointmentService.updateAppointmentStatus(appointmentId, toStatus);
+            result.setCode(ResultCode.SUCCESS);
+            result.setData(code);
+        }catch (Exception e){
+            Log.error("failed to update appointment", e);
+            result.setCode(ResultCode.INTERNAL_ERROR);
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/appointment/addcomment", method = RequestMethod.POST) @ResponseBody
+    public Result addCommentOnAppointment(@RequestParam("appointmentId") Integer appointmentId,
+                                      @RequestParam("comment") String comment) {
+        Result result = new Result();
+        try{
+            Integer code = appointmentService.addCommentOnAppointment(appointmentId, comment);
             result.setCode(ResultCode.SUCCESS);
             result.setData(code);
         }catch (Exception e){

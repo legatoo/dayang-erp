@@ -1,27 +1,31 @@
 package com.dayanghome.dayangerp.form;
 
+import com.dayanghome.dayangerp.utils.DistrictIdMap;
 import com.dayanghome.dayangerp.vo.Appointment;
 import com.dayanghome.dayangerp.vo.Customer;
+import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.Date;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class AppointmentForm implements Serializable {
-    private String wxId;
-    private String wxName;
+    private String wxId = "";
+    private String wxName = "";
     private String chineseName;
     private String mobile;
     private Integer gender;
+    private Integer provinceId;
     private Integer cityId;
-    private Integer districtId;
     private String address;
     private Long appointmentDay;
-    private Integer hourBegin;
-    private Integer hourEnd;
+    private String hourBegin;//HH:mm
+    private String hourEnd;//HH:mm
+    private String comment;
 
     public void validate(){
-
+        checkArgument(!Strings.isNullOrEmpty(mobile), "mobile can not be empty");
     }
 
     public String getWxId() {
@@ -64,13 +68,6 @@ public class AppointmentForm implements Serializable {
         this.cityId = cityId;
     }
 
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
 
     public String getAddress() {
         return address;
@@ -96,20 +93,36 @@ public class AppointmentForm implements Serializable {
         this.gender = gender;
     }
 
-    public Integer getHourBegin() {
+    public String getHourBegin() {
         return hourBegin;
     }
 
-    public void setHourBegin(Integer hourBegin) {
+    public void setHourBegin(String hourBegin) {
         this.hourBegin = hourBegin;
     }
 
-    public Integer getHourEnd() {
+    public String getHourEnd() {
         return hourEnd;
     }
 
-    public void setHourEnd(Integer hourEnd) {
+    public void setHourEnd(String hourEnd) {
         this.hourEnd = hourEnd;
+    }
+
+    public Integer getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Customer extractCustomer(){
@@ -120,7 +133,6 @@ public class AppointmentForm implements Serializable {
         customer.setMobile(mobile);
         customer.setGender(gender);
         customer.setCityId(cityId);
-        customer.setCityId(districtId);
         customer.setAddress(address);
         customer.setCreateTime(new Date());
 
@@ -132,14 +144,17 @@ public class AppointmentForm implements Serializable {
         Appointment appointment = new Appointment();
         appointment.setContactMobile(mobile);
         appointment.setAddress(address);
+        appointment.setProvinceId(provinceId);
         appointment.setCityId(cityId);
-        appointment.setDistrictId(districtId);
         DateTime appointmentDate = new DateTime(appointmentDay).withTimeAtStartOfDay();
         appointment.setAppointmentDay(new Date(appointmentDate.getMillis()));
         appointment.setStatus(0);//0=为处理 1=已处理
         appointment.setCreateTime(new Date());
         appointment.setHourBegin(hourBegin);
         appointment.setHourEnd(hourEnd);
+        appointment.setComment(comment);
+        appointment.setProvinceName(DistrictIdMap.provinceName(provinceId));
+        appointment.setCityName(DistrictIdMap.cityName(cityId));
 
         return appointment;
     }

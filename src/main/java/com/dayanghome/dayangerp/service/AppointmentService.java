@@ -73,4 +73,9 @@ public class AppointmentService {
     public int deleteAppointment(Integer appointmentId){
         return appointmentMapper.deleteAppointment(appointmentId);
     }
+
+    @Transactional
+    public int addCommentOnAppointment(Integer appointmentId, String comment){
+        return appointmentMapper.addCommentOnAppointment(appointmentId, comment);
+    }
 }
