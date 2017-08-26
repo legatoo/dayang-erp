@@ -3,10 +3,9 @@ package com.dayanghome.dayangerp.controller;
 import com.dayanghome.dayangerp.enums.ResultCode;
 import com.dayanghome.dayangerp.form.AppointmentForm;
 import com.dayanghome.dayangerp.form.AppointmentQuery;
-import com.dayanghome.dayangerp.form.CustomerQuery;
 import com.dayanghome.dayangerp.result.Result;
 import com.dayanghome.dayangerp.service.AppointmentService;
-import com.dayanghome.dayangerp.utils.DistrictIdMap;
+import com.dayanghome.dayangerp.service.CustomerService;
 import com.dayanghome.dayangerp.vo.Appointment;
 import com.dayanghome.dayangerp.vo.Customer;
 import org.slf4j.Logger;
@@ -23,22 +22,24 @@ import java.util.stream.Collectors;
 
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/tob/v1")
-public class ToBApiController {
+@RequestMapping("/api/tob/v1/appointment")
+public class AppointmentController {
     private static final Logger Log = LoggerFactory.getLogger(ToCApiController.class);
 
     @Autowired AppointmentService appointmentService;
+    @Autowired CustomerService customerService;
 
-    @RequestMapping(value = "/appointment/add", method = RequestMethod.POST) @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public Result addAppointment(@RequestBody AppointmentForm appointmentForm) {
         Result result = new Result();
 
-        try{
+        try {
             appointmentForm.validate();
-            int appointmentId =  appointmentService.addAppointment(appointmentForm);
+            int appointmentId = appointmentService.addAppointment(appointmentForm);
             result.setCode(ResultCode.SUCCESS);
             result.setData(appointmentId);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.error("failed to add appointment", e);
             result.setCode(ResultCode.INTERNAL_ERROR);
         }
@@ -46,15 +47,16 @@ public class ToBApiController {
         return result;
     }
 
-    @RequestMapping(value = "/appointment/search", method = RequestMethod.POST) @ResponseBody
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
     public Result queryAppointments(@RequestBody AppointmentQuery query) {
         Result result = new Result();
-        try{
-            List<Appointment> appointments =  appointmentService.searchAppoint(query);
+        try {
+            List<Appointment> appointments = appointmentService.searchAppoint(query);
             int total = 0;
             if (appointments != null && appointments.size() > 0) {
                 Set<Integer> customerIds = appointments.stream().map(Appointment::getCustomerId).collect(Collectors.toSet());
-                List<Customer> customers = appointmentService.getCustomerInfo(customerIds);
+                List<Customer> customers = customerService.getCustomerInfo(customerIds);
                 Map<Integer, Customer> customerMap = customers.stream().collect(
                         Collectors.toMap(Customer::getId, Function.identity())
                 );
@@ -71,7 +73,7 @@ public class ToBApiController {
             result.setCode(ResultCode.SUCCESS);
             result.setLength(total);
             result.setData(appointments);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.error("failed to add appointment", e);
             result.setCode(ResultCode.INTERNAL_ERROR);
         }
@@ -79,25 +81,9 @@ public class ToBApiController {
         return result;
     }
 
-    @RequestMapping(value = "/customer/search", method = RequestMethod.POST) @ResponseBody
-    public Result queryCustomers(@RequestBody CustomerQuery query){
-        Result result = new Result();
-        try {
-            List<Customer> customers = appointmentService.searchCustomer(query);
-            result.setCode(ResultCode.SUCCESS);
-            result.setLength(customers == null ? 0 : customers.size());
-            result.setData(customers);
-        } catch (Exception e){
-            Log.error("failed to query customers", e);
-            result.setCode(ResultCode.INTERNAL_ERROR);
-        }
-
-        return result;
-    }
-
-    @RequestMapping(value = "/appointment/markdone", method = RequestMethod.POST) @ResponseBody
+    @RequestMapping(value = "/markdone", method = RequestMethod.POST) @ResponseBody
     public Result markAppointmentDone(@RequestParam("appointmentId") Integer appointmentId,
-                                             @RequestParam("toStatus") Integer toStatus) {
+                                      @RequestParam("toStatus") Integer toStatus) {
         Result result = new Result();
         try{
             Integer code = appointmentService.updateAppointmentStatus(appointmentId, toStatus);
@@ -111,9 +97,9 @@ public class ToBApiController {
         return result;
     }
 
-    @RequestMapping(value = "/appointment/addcomment", method = RequestMethod.POST) @ResponseBody
+    @RequestMapping(value = "/addcomment", method = RequestMethod.POST) @ResponseBody
     public Result addCommentOnAppointment(@RequestParam("appointmentId") Integer appointmentId,
-                                      @RequestParam("comment") String comment) {
+                                          @RequestParam("comment") String comment) {
         Result result = new Result();
         try{
             Integer code = appointmentService.addCommentOnAppointment(appointmentId, comment);
@@ -127,7 +113,7 @@ public class ToBApiController {
         return result;
     }
 
-    @RequestMapping(value = "/appointment/delete", method = RequestMethod.POST) @ResponseBody
+    @RequestMapping(value = "/delete", method = RequestMethod.POST) @ResponseBody
     public Result deleteAppointment(@RequestParam("appointmentId") Integer appointmentId) {
         Result result = new Result();
         try{

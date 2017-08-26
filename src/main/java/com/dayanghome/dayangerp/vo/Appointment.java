@@ -1,11 +1,7 @@
 package com.dayanghome.dayangerp.vo;
 
-import com.google.common.base.Strings;
-
 import java.io.Serializable;
 import java.util.Date;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public class Appointment implements Serializable{
     private Integer id;

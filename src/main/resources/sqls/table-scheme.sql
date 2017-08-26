@@ -33,3 +33,12 @@ CREATE TABLE `appointment` (
   `updateTime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='预约信息';
+
+DROP TABLE `system_admin`;
+CREATE TABLE `system_admin` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `loginName` VARCHAR(50) NOT NULL COMMENT '登录用户名',
+  `secret` VARCHAR(500) NOT NULL COMMENT '加密后的登录密码',
+  `status` TINYINT(3) DEFAULT 1 COMMENT '账户状态 1=开启  0=禁用',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统管理员用户';

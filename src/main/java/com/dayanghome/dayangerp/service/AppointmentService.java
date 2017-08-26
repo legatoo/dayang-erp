@@ -57,12 +57,7 @@ public class AppointmentService {
         return appointmentMapper.countByQuery(query);
     }
 
-    public List<Customer> searchCustomer(CustomerQuery query){
-        return customerMapper.searchCustomers(query);
-    }
-    public List<Customer> getCustomerInfo(Set<Integer> customerIds){
-        return customerMapper.getCustomerInfoByIds(customerIds);
-    }
+
 
     @Transactional
     public int updateAppointmentStatus(Integer appointmentId, Integer toStatus){
