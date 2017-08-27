@@ -11,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import static com.google.common.base.Preconditions.checkState;
 
 @Controller
@@ -39,12 +44,17 @@ public class SystemAdminController {
     }
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST) @ResponseBody
-    public Result verifySystemAdmin(@RequestBody SystemAdmin systemAdmin) {
+    public Result verifySystemAdmin(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                    @RequestBody SystemAdmin systemAdmin) {
         Result result = new Result();
 
         try{
             SystemAdmin exist =  systemAdminService.verigySystemAdmin(systemAdmin);
             checkState(exist != null, "system verify failed");
+
+            //登录成功设置Cookie
+            HttpSession session = httpServletRequest.getSession();
+//            httpServletResponse.addCookie(new Cookie("SSOID", session.getId()));
             result.setCode(ResultCode.SUCCESS);
             result.setData(exist);
         }catch (Exception e){

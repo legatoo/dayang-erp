@@ -2,7 +2,6 @@ package com.dayanghome.dayangerp.service;
 
 import com.dayanghome.dayangerp.form.AppointmentForm;
 import com.dayanghome.dayangerp.form.AppointmentQuery;
-import com.dayanghome.dayangerp.form.CustomerQuery;
 import com.dayanghome.dayangerp.mapper.AppointmentMapper;
 import com.dayanghome.dayangerp.mapper.CustomerMapper;
 import com.dayanghome.dayangerp.vo.Appointment;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class AppointmentService {
