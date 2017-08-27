@@ -8,10 +8,12 @@ import org.apache.ibatis.annotations.*;
 public interface SystemAdminMapper {
     @Insert({"INSERT INTO system_admin " +
             "(id, loginName, secret, status)" +
-            "VALUES(null, #{loginName}, #{secret}, 1)"})
+            "VALUES(null, #{loginName}, #{secret}, 0)"})
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertSystemAdmin(SystemAdmin systemAdmin);
 
+    @Update({"UPDATE system_admin SET status = 1 WHERE id = #{systemAdminId}"})
+    int activateSystemAdmin(@Param("systemAdminId") Integer systemAdminId);
 
     @Select({"<script>" +
             "SELECT * FROM system_admin WHERE status = 1 " +

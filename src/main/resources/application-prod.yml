@@ -46,6 +46,8 @@ logging:
     log4j.logger.java.sql: error
     com.dayanghome.dayangerp.mapper: error
   file:
+
+#这里的session控制redis内session key的超时时间
 server:
   session:
       timeout: 18000

@@ -3,6 +3,7 @@ package com.dayanghome.dayangerp.filter;
 import com.dayanghome.dayangerp.service.AppointmentService;
 import com.dayanghome.dayangerp.service.FilterBeanProvider;
 import com.dayanghome.dayangerp.service.SessionFetcher;
+import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,23 +47,29 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
-        if(ssoid == null){
-            HttpServletResponse httpResponse = (HttpServletResponse)servletResponse;
-            httpResponse.setStatus(HttpStatus.FORBIDDEN.value());
-        }else{
+
+        if(!Strings.isNullOrEmpty(ssoid)){
             //verify ssoid
             Log.warn("going to verify cookie {}", ssoid);
 
             SessionFetcher sessionFetcher = FilterBeanProvider.getBean("sessionFetcher", SessionFetcher.class);
             Session session = sessionFetcher.getSessionById(ssoid);
-            if (session == null) {
-                Log.info("session id {} in cookie is invalid now {}", ssoid, new DateTime());
-                HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-                httpResponse.setStatus(HttpStatus.FORBIDDEN.value());
-            } else {
+
+            if(session != null){
                 filterChain.doFilter(servletRequest, servletResponse);
+                return;
             }
         }
+
+
+        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
+
+        String origin = httpRequest.getHeader("Origin");
+        httpResponse.setHeader("Access-Control-Allow-Origin", Strings.isNullOrEmpty(origin) ? "*" : origin);
+        httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        httpResponse.setHeader("Access-Control-Allow-Credentials ", "true");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
+        httpResponse.setStatus(HttpStatus.FORBIDDEN.value());
     }
 
     @Override

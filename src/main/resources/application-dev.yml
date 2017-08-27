@@ -48,7 +48,7 @@ logging:
   file:
 server:
   session:
-      timeout: 600
+      timeout: 60
   port: 9411
 
 

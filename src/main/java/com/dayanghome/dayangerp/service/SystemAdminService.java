@@ -21,6 +21,11 @@ public class SystemAdminService {
         return admin.getId();
     }
 
+    @Transactional
+    public int activateAdminUser(Integer systemAdminId){
+        return systemAdminMapper.activateSystemAdmin(systemAdminId);
+    }
+
     public SystemAdmin verigySystemAdmin(SystemAdmin admin){
         return systemAdminMapper.verifySystemAdminLogin(admin);
     }
