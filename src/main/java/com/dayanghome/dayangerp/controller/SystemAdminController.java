@@ -1,13 +1,16 @@
 package com.dayanghome.dayangerp.controller;
 
+import com.dayanghome.dayangerp.config.HttpSessionConfig;
 import com.dayanghome.dayangerp.enums.ResultCode;
 import com.dayanghome.dayangerp.result.Result;
 import com.dayanghome.dayangerp.service.AppointmentService;
 import com.dayanghome.dayangerp.service.SystemAdminService;
 import com.dayanghome.dayangerp.vo.SystemAdmin;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +23,14 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/tob/v1/systemadmin")
+@RequestMapping("/api/toc/v1/systemadmin")
 public class SystemAdminController {
 
     private static final Logger Log = LoggerFactory.getLogger(ToCApiController.class);
 
     @Autowired SystemAdminService systemAdminService;
+    @Autowired private RedisOperationsSessionRepository repository;
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST) @ResponseBody
     public Result addSystemAdmin(@RequestBody SystemAdmin systemAdmin) {
@@ -52,9 +57,10 @@ public class SystemAdminController {
             SystemAdmin exist =  systemAdminService.verigySystemAdmin(systemAdmin);
             checkState(exist != null, "system verify failed");
 
-            //登录成功设置Cookie
             HttpSession session = httpServletRequest.getSession();
-//            httpServletResponse.addCookie(new Cookie("SSOID", session.getId()));
+            Log.info("verify success set session {} in cookie at {}", session.getId(), new DateTime());
+
+            //登录成功设置Cookie
             result.setCode(ResultCode.SUCCESS);
             result.setData(exist);
         }catch (Exception e){
