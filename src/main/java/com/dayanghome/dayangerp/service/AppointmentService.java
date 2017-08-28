@@ -36,7 +36,7 @@ public class AppointmentService {
         }
 
         if(!exist){
-            customerMapper.insertCustomer(customer);
+                customerMapper.insertCustomer(customer);
             Log.info("insert new custom id {}, detail {}", customer.getId(), customer);
         }
 

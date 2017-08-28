@@ -1,13 +1,14 @@
 DROP TABLE  `customer`;
 CREATE TABLE `customer` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `wxId` VARCHAR(60) DEFAULT '' COMMENT '微信ID',
   `wxName` VARCHAR(60) DEFAULT '' COMMENT '微信名',
   `chineseName` VARCHAR(20) DEFAULT '' COMMENT '中文名',
   `mobile` VARCHAR(11) DEFAULT '' COMMENT '用户手机',
   `gender` INT(1) DEFAULT 0 COMMENT '用户性别 0=女 1=男',
+  `provinceId` INT(11) DEFAULT  0 COMMENT '省ID',
+  `provinceName` VARCHAR(30) DEFAULT  0 COMMENT '省名',
   `cityId` INT(11) DEFAULT 0 COMMENT '城市ID',
-  `address` VARCHAR(120) DEFAULT '' COMMENT '常住住址',
+  `cityName` VARCHAR(30) DEFAULT 0 COMMENT '城市名',
   `createTime` datetime NOT NULL COMMENT '创建时间',
   `updateTime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)

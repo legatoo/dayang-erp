@@ -5,13 +5,14 @@ import java.util.Date;
 
 public class Customer implements Serializable{
     private Integer id;
-    private String wxId;
     private String wxName;
     private String chineseName;
     private String mobile;
     private Integer gender;
+    private Integer provinceId;
+    private String provinceName;
     private Integer cityId;
-    private String address;
+    private String cityName;
     private Date createTime;
     private Date updateTIme;
 
@@ -21,14 +22,6 @@ public class Customer implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getWxId() {
-        return wxId;
-    }
-
-    public void setWxId(String wxId) {
-        this.wxId = wxId;
     }
 
     public String getWxName() {
@@ -63,6 +56,22 @@ public class Customer implements Serializable{
         this.gender = gender;
     }
 
+    public Integer getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
     public Integer getCityId() {
         return cityId;
     }
@@ -71,12 +80,12 @@ public class Customer implements Serializable{
         this.cityId = cityId;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public Date getCreateTime() {
@@ -99,13 +108,14 @@ public class Customer implements Serializable{
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", wxId='" + wxId + '\'' +
                 ", wxName='" + wxName + '\'' +
                 ", chineseName='" + chineseName + '\'' +
                 ", mobile='" + mobile + '\'' +
-                ", gender='" + gender + '\'' +
+                ", gender=" + gender +
+                ", provinceId=" + provinceId +
+                ", provinceName='" + provinceName + '\'' +
                 ", cityId=" + cityId +
-                ", address='" + address + '\'' +
+                ", cityName='" + cityName + '\'' +
                 ", createTime=" + createTime +
                 ", updateTIme=" + updateTIme +
                 '}';

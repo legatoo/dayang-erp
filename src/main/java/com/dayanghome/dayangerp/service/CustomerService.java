@@ -24,6 +24,10 @@ public class CustomerService {
     public List<Customer> searchCustomer(CustomerQuery query){
         return customerMapper.searchCustomers(query);
     }
+
+    public int countTotalCustomer(CustomerQuery query){
+        return customerMapper.countCustomer(query);
+    }
     public List<Customer> getCustomerInfo(Set<Integer> customerIds){
         return customerMapper.getCustomerInfoByIds(customerIds);
     }

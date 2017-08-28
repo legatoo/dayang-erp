@@ -29,7 +29,11 @@ public class CustomerController {
         try {
             List<Customer> customers = customerService.searchCustomer(query);
             result.setCode(ResultCode.SUCCESS);
-            result.setLength(customers == null ? 0 : customers.size());
+            if(customers == null || customers.size() == 0){
+                result.setLength(0);
+            }else{
+                result.setLength(customerService.countTotalCustomer(query));
+            }
             result.setData(customers);
         } catch (Exception e){
             Log.error("failed to query customers", e);

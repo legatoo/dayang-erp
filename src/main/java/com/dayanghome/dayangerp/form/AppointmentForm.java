@@ -127,13 +127,14 @@ public class AppointmentForm implements Serializable {
 
     public Customer extractCustomer(){
         Customer customer = new Customer();
-        customer.setWxId(wxId);
         customer.setWxName(wxName);
         customer.setChineseName(chineseName);
         customer.setMobile(mobile);
         customer.setGender(gender);
+        customer.setProvinceId(provinceId);
+        customer.setProvinceName(DistrictIdMap.provinceName(provinceId));
         customer.setCityId(cityId);
-        customer.setAddress(address);
+        customer.setCityName(DistrictIdMap.cityName(cityId));
         customer.setCreateTime(new Date());
 
         return customer;
