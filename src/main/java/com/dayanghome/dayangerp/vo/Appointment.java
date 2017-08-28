@@ -155,7 +155,7 @@ public class Appointment implements Serializable{
     }
 
     public void mergeHourBeginAndEnd(){
-        this.hourRange = this.hourBegin + "时 - " + this.hourEnd + "时";
+        this.hourRange = this.hourBegin + " - " + this.hourEnd;
     }
 
     public String getProvinceName() {
