@@ -9,19 +9,31 @@
         <Console name="Console" target="system_out">
             <PatternLayout pattern="${PATTERN}"/>
         </Console>
+
+        <RollingFile name="RollingFile" fileName="/logs/dayanghome/app.log"
+                     filePattern="/logs/dayanghome/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingFile>
     </appenders>
     <!--配置mybatis日志-->
     <loggers>
 
         <logger name="log4j.logger.org.mybatis" additivity="false">
-            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
         </logger>
         <logger name="log4j.logger.java.sql" additivity="false">
-            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
         </logger>
-        <logger name="com.dayanghome.dayangerp.mapper"/>
+        <logger name="com.dayanghome.dayangerp.mapper" additivity="false">
+            <appender-ref ref="RollingFile"/>
+        </logger>
         <root>
             <appenderref ref="Console"/>
+            <appenderref ref="RollingFile"/>
         </root>
     </loggers>
 
