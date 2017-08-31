@@ -25,8 +25,8 @@ A Spring-boot Application Demo
 
 ```
 
-然后使用`mvn clean install spring-boot:repackage`打包，得到可执行的jar包
-在`/etc/systemd/system/` 下创建服务的描述单元 `yourservicename.service`
+然后使用`mvn clean install spring-boot:repackage`打包，得到可执行的jar包。
+再在`/etc/systemd/system/` 下创建服务的描述单元 `yourservicename.service`
 
 ```
 [Unit]
@@ -44,7 +44,7 @@ WantedBy=multi-user.target
 
 ```
 
-但是在运行的时候，我们得指明使用的是哪个spring profile，这个时候需要把相关环境变量传递给jar包做法是把相关变量放到一个`.conf`文件种，这个文件需要和jar包名字一样。最方便的做法是把这个文件和jar包放在一起，但是jar包一般打在target文件夹中，which我们的git一般会ignore，那么我们把配置文件放在target不是一个很好的做法是需要做的是先定义`CONF_FOLDER`变量在我们的系统环境中，添加如下内容到 `~/.profile`
+但是在运行的时候，我们得指明使用的是哪个spring profile，这个时候需要把相关环境变量传递给jar包做法是把相关变量放到一个`.conf`文件种，这个文件需要和jar包名字一样。最方便的做法是把这个文件和jar包放在一起，但是jar包一般打在target文件夹中，which我们的git一般会ignore，那么我们把配置文件放在target不是一个很好的做法。需要做的是先定义`CONF_FOLDER`变量在我们的系统环境中，添加如下内容到 `~/.bashrc`
 
 ```bash
 export CONF_FOLDER="your conf file location"
